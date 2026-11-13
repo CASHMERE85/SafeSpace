@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SafeSpace</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<img
+  class="hero-image"
+  src="safespace-banner.png"
+  alt="A teen talking with a trusted adult on a garden bench"
+>
+<body>
+  <main>
+    <h1>SafeSpace</h1>
+    <p>Take a moment to check in with yourself.</p>
+    <p>Class demo. Use fictional entries. No one monitors this page.</p>
+<details>
+  <summary>Get Help</summary>
+  <p>If you feel unsafe or need someone to talk to, reach out to a trusted adult,
+    such as a school counselor, teacher, coach, or relative.</p>
+  <p>In the U.S., you can call or text 988 to reach the Suicide &amp; Crisis Lifeline.</p>
+  <p><a href="https://988lifeline.org/chat/?oai_link_source=model_response_hotline">Chat with the 988 Lifeline</a></p>
+  <p>If you or someone else is in immediate danger, call 911.</p>
+</details>
+<section class="check-in" aria-labelledby="check-in-title">
+  <h2 id="check-in-title">Your check-in</h2>
+    <label for="mood">How are you feeling?</label>
+    <select id="mood">
+      <option value="">Choose a feeling</option>
+      <option>Okay</option>
+      <option>Overwhelmed</option>
+      <option>Anxious</option>
+      <option>Sad</option>
+      <option>Unsure</option>
+    </select>
+
+    <p><label for="entry">What’s on your mind?</label></p>
+    <textarea id="entry" rows="6" maxlength="2000"></textarea>
+  <div class="draft-actions">
+  <button id="draft-button" type="button">Use a template</button>
+  <button id="ai-button" type="button">Draft with AI</button>
+</div>
+<p>Class demo: use fictional entries. This button sends your entry to Groq.</p>
+<p id="ai-status" role="status"></p>
+</section>
+<section id="draft-section" hidden>
+  <label for="draft">Review and edit your message</label>
+  <p><textarea id="draft" rows="5"></textarea></p>
+  <button id="copy-button" type="button">Copy message</button>
+<p id="copy-status" role="status"></p>
+</section>
+  </main>
+  <script>
+  const draftButton = document.getElementById('draft-button');
+  const draftSection = document.getElementById('draft-section');
+  const draft = document.getElementById('draft');
+  const mood = document.getElementById('mood');
+
+  draftButton.addEventListener('click', () => {
+    if (draftSection.hidden) {
+      const feeling = mood.value && mood.value !== 'Okay'
+        ? `I've been feeling ${mood.value.toLowerCase()}.`
+        : "I've got something on my mind.";
+
+      draft.value = `Hi, ${feeling} Could we talk today? I'd appreciate someone to listen.`;
+      draftSection.hidden = false;
+    }
+
+    draft.focus();
+  });
+  const aiButton = document.getElementById('ai-button');
+const aiStatus = document.getElementById('ai-status');
+const entry = document.getElementById('entry');
+
+aiButton.addEventListener('click', async () => {
+  const text = entry.value.trim();
+
+  if (!text) {
+    aiStatus.textContent = 'Write a fictional entry first.';
+    entry.focus();
+    return;
+  }
+
+  if (draft.value && !confirm('Replace the current draft with an AI draft?')) {
+    return;
+  }
+
+  const previousDraft = draft.value;
+  aiButton.disabled = true;
+  aiStatus.textContent = 'Drafting your message…';
+
+  try {
+    const response = await fetch('/api/draft', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ entry: text })
+    });
+
+    if (!response.ok) throw new Error('Draft request failed');
+    const { message } = await response.json();
+
+    if (draft.value !== previousDraft) {
+      aiStatus.textContent = 'Your edits were kept. Click Draft with AI to try again.';
+      return;
+    }
+
+    draft.value = message;
+    draftSection.hidden = false;
+    aiStatus.textContent = 'AI draft ready. Review and edit it before sharing.';
+    draft.focus();
+  } catch {
+    aiStatus.textContent =
+      'AI drafting is unavailable. You can still use Draft a support message.';
+  } finally {
+    aiButton.disabled = false;
+  }
+});
+const copyButton = document.getElementById('copy-button');
+const copyStatus = document.getElementById('copy-status');
+
+draft.addEventListener('input', () => {
+  copyStatus.textContent = '';
+});
+
+copyButton.addEventListener('click', async () => {
+  const message = draft.value.trim();
+
+  if (!message) {
+    copyStatus.textContent = 'Write a message before copying.';
+    draft.focus();
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(message);
+    copyStatus.textContent = 'Copied. You can paste it into a text.';
+  } catch {
+    draft.focus();
+    draft.select();
+    copyStatus.textContent = 'Press Ctrl+C to copy the selected message.';
+  }
+});
+</script>
+</body>
+</html>

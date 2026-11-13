@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #edf4f1;
+  color: #18352e;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  width: min(42rem, calc(100% - 2rem));
+  margin: 2rem auto;
+  padding: clamp(1rem, 4vw, 2rem);
+  background: white;
+  border: 1px solid #cbdcd6;
+  border-radius: 1rem;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+details {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: #e7f2ee;
+  border-radius: 0.5rem;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+button, select, textarea {
+  font: inherit;
+}
+
+select, textarea {
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid #718d84;
+  border-radius: 0.5rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: #205c4c;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+:focus-visible {
+  outline: 3px solid #2856a1;
+  outline-offset: 3px;
+}
+body {
+  min-height: 100vh;
+  color: #172d43;
+  background:
+    radial-gradient(ellipse at top right, #ffd6be, transparent 55%),
+    linear-gradient(150deg, #c3dfff, #daf5ef 55%, #f2eeff);
+}
+
+main {
+  width: min(46rem, calc(100% - 2rem));
+  border-color: #c8d8e9;
+  border-radius: 1.5rem;
+  box-shadow: 0 16px 48px rgb(30 58 94 / 14%);
+}
+
+h1 {
+  margin-bottom: 0.75rem;
+  color: #17477b;
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+  line-height: 1.1;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}
+
+details {
+  background: #fff1dd;
+  border: 1px solid #eac69b;
+  color: #633a15;
+}
+
+#ai-button {
+  background: #2455a6;
+}
+
+#draft-section {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid #c8d8e9;
+  border-radius: 0.75rem;
+  background: #f0f6ff;
+}main {
+  width: min(40rem, calc(100% - 1.5rem));
+  margin-block: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.check-in {
+  padding: clamp(1rem, 4vw, 1.5rem);
+  border: 1px solid #c8d8ee;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #eaf2ff, #e9f8f3);
+}
+
+.check-in h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.draft-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+#draft-button {
+  background: #d9e8fb;
+  color: #17477b;
+}
+
+@media (max-width: 420px) {
+  .draft-actions {
+    grid-template-columns: 1fr;
+  }
+}

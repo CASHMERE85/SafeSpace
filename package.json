@@ -1,0 +1,26 @@
+{
+  "name": "safespace",
+  "version": "1.0.0",
+  "description": "Space for others to reach safety in the palm of their hands",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CASHMERE85/SafeSpace.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/CASHMERE85/SafeSpace/issues"
+  },
+  "homepage": "https://github.com/CASHMERE85/SafeSpace#readme",
+  "dependencies": {
+    "@google/genai": "^3.3.0",
+    "express": "^5.3.0",
+    "openai": "^7.56.0"
+  }
+}
