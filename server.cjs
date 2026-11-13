@@ -48,6 +48,8 @@ app.post('/api/draft', async (req, res) => {
   }
 });
 
-app.listen(3000, '127.0.0.1', () => {
-  console.log('SafeSpace is running at http://127.0.0.1:3000');
+const port = process.env.PORT || 3000;
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`SafeSpace is running on port ${port}`);
 });
